@@ -26,3 +26,8 @@ print()
 x = numpy.var(speed)
 print(x)
 print()
+
+# Machine Learning - Percentiles
+x = numpy.percentile(x, 75)
+print(x)
+print()
