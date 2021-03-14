@@ -154,9 +154,9 @@ y = [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]
 
 mymodel = numpy.poly1d(numpy.polyfit(x, y, 3))
 myline = numpy.linspace(2, 95, 100)
-plt.scatter(x, y)
-plt.plot(myline, mymodel(myline))
-plt.show()
+# plt.scatter(x, y)
+# plt.plot(myline, mymodel(myline))
+# plt.show()
 print(r2_score(y, mymodel(x)))
 print()
 
@@ -185,8 +185,8 @@ numpy.random.seed(2)
 
 x = numpy.random.normal(3, 1, 100)
 y = numpy.random.normal(150, 40, 100) / x
-plt.scatter(x, y)
-plt.show()
+# plt.scatter(x, y)
+# plt.show()
 
 # Split Into Train/Test
 train_x = x[:80]
@@ -194,12 +194,12 @@ train_y = y[:80]
 
 test_x = x[80:]
 test_y = y[80:]
-plt.scatter(train_x, train_y)
-plt.show()
+# plt.scatter(train_x, train_y)
+# plt.show()
 
 # Display the Testing Set
-plt.scatter(test_x, test_y)
-plt.show()
+# plt.scatter(test_x, test_y)
+# plt.show()
 
 # Fit the Data Set
 
@@ -213,9 +213,9 @@ test_x = x[80:]
 test_y = y[80:]
 mymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))
 myline = numpy.linspace(0, 6, 100)
-plt.scatter(train_x, train_y)
-plt.plot(myline, mymodel(myline))
-plt.show()
+# plt.scatter(train_x, train_y)
+# plt.plot(myline, mymodel(myline))
+# plt.show()
 
 # R2
 r2 = r2_score(test_y, mymodel(test_x))
@@ -224,3 +224,59 @@ print()
 
 # Predict Values
 print(mymodel(5))
+
+# Machine Learning - Decision Tree
+import pandas
+from sklearn import tree
+import pydotplus
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.image as pltimg
+df = pandas.read_csv("shows.csv")
+print(df)
+print()
+
+d = {'UK' : 0,'USA' : 1, 'N' : 2}
+df['Nationality'] = df['Nationality'].map(d)
+d = {'YES' : 1, 'NO' : 0}
+df['Go'] = df['Go'].map(d)
+print(df)
+print()
+
+features = ['Age', 'Experience', 'Rank', 'Nationality']
+
+X = df[features]
+y = df['Go']
+
+print(X)
+print(y)
+print()
+
+# Create a Decision Tree, save it as an image, and show the image:
+import pandas
+from sklearn import tree
+import pydotplus
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+import matplotlib.image as pltimg
+
+df = pandas.read_csv("shows.csv")
+
+d = {'UK': 0, 'USA': 1, 'N': 2}
+df['Nationality'] = df['Nationality'].map(d)
+d = {'YES': 1, 'NO': 0}
+df['Go'] = df['Go'].map(d)
+
+features = ['Age', 'Experience', 'Rank', 'Nationality']
+
+X = df[features]
+y = df['Go']
+
+dtree = DecisionTreeClassifier()
+dtree = dtree.fit(X, y)
+data = tree.export_graphviz(dtree, out_file=None, feature_names=features)
+graph = pydotplus.graph_from_dot_data(data)
+graph.write_png('mydecisiontree.png')
+
+img=pltimg.imread('mydecisiontree.png')
+imgplot = plt.imshow(img)
+plt.show()
