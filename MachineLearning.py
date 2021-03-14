@@ -15,3 +15,14 @@ print()
 from scipy import stats  
 x = stats.mode(speed)
 print(x)
+print()
+
+# Machine Learning - Standard Deviation
+x = numpy.std(speed)
+print(x)
+print()
+
+# Variance
+x = numpy.var(speed)
+print(x)
+print()
